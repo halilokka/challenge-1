@@ -1,21 +1,18 @@
 $input = [
-	[1,0,0,0,0,0,0,1],
-	[0,1,0,1,1,1,1,1],
-	[1,0,1,1,0,0,1,1],
-	[0,0,1,0,1,0,0,1],
-	[1,1,1,0,1,0,0,1],
-	[1,0,1,1,0,0,1,1],
-	[1,0,0,0,0,1,1,1],
-	[1,0,1,1,0,0,0,1]
+	[1,0,0,0,0,0,0],
+	[0,1,0,1,1,1,1],
+	[1,0,1,1,0,0,1],
+	[0,0,1,0,1,0,0],
+	[1,1,1,0,1,0,0],
+	[1,0,1,1,0,0,1],
+	[1,0,0,0,0,1,1],
 ];
 
 
 
-cikti($input);
-echo "-------<br>";
 $_duzen = duzen($input);
 $_kontrol = kontrol($input, $_duzen["kontrol"], $_duzen["sinirlar"], $_duzen["cikti"]);
-cikti($_kontrol["cikti"]);exit;
+cikti($input, $_kontrol["cikti"]);exit;
 print_r($_kontrol);exit;
 
 function duzen($matriks){
@@ -96,7 +93,7 @@ function kontrol($matriks, $kordinatlar, $sinirlar, $cikti){
 	return $kontrol;
 }
 
-function cikti($matriks){
+function cikti($matriks, $matriksoutput=null){
 	$ycount = count($matriks[0])-1;
 	foreach ($matriks as $xkey => $xvalue) {
 		foreach ($xvalue as $ykey => $yvalue) {
@@ -107,5 +104,23 @@ function cikti($matriks){
 		}
 		echo "</br>";
 	}
+	if($matriksoutput){
+		echo '-----------<br><div>';
+		$ycount2 = count($matriksoutput[0])-1;
+		foreach ($matriksoutput as $xkey => $xvalue) {
+			echo '<div style="width:100%; display:flex;">';
+			foreach ($xvalue as $ykey => $yvalue) {
+				if($matriks[$xkey][$ykey]!=$yvalue){
+					echo '<div style="color:red;">'.$yvalue.'</div>';
+				}else{
+					echo '<div>'.$yvalue.'</div>';
+				}
+				if($ykey!=$ycount2){
+					echo "<div>&nbsp;/&nbsp;</div>";
+				}	
+			}
+			echo '</div>';
+		}
+		echo '</div>';
+	}
 }
-exit;
